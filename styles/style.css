@@ -1,0 +1,55 @@
+* {
+    background-color: #0f224a;
+}
+
+h1, h2 {
+    text-align: center;
+    color: #FFCB08;
+}
+
+nav div a img {
+    height: 5rem;
+}
+
+
+
+form .btn {
+    color: #FFCB08;
+    font-size: 14px;
+    font-weight: 400;
+    word-wrap: break-word;
+    display: inline-flex;
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 10px;
+    border: 1px solid #FFCB08;
+    margin-left: 1rem;
+}
+
+form .btn:hover {
+    background-color: #FFCB08;
+    color: #0f224a;
+}
+
+.card {
+    background-color:#0f224a;
+    color: white;
+    border-radius: 12px;
+}
+
+.cardPoke:hover {
+    box-shadow: 5px 5px 5px rgba(0,0,0,0.4);
+    transform: translateY(-1%);
+    
+}
+
+.cardContainer {
+    margin: 0 auto;
+
+}
+
+
+
+
