@@ -1,9 +1,10 @@
 // me guardo la url de la que quiero traer datos
 const urlPokemon = "https://pokeapi.co/api/v2/pokemon/?offset=20&limit=100";
+const urlPokemonPorId = "https://pokeapi.co/api/v2/pokemon/";
 
 
 // Hago un array para pushear primeros datos de los pokemones
-resultadosPokemones = [];
+idPokemones = [];
 
 // Hago una función que consulta con fetch datos básicos de 100 pokemones
 
@@ -20,22 +21,30 @@ const requestPokemons = () => {
         // Me guardo URL en array 
 
         resultados.forEach(element => {
-            const url = (element["url"]);
-            mostrarCard(element);
-            resultadosPokemones.push(url);
-        });
+            const id = (element["url"].slice(34, -1));
+            
+            //idPokemones.push(id);
+
+                fetch(urlPokemonPorId + id)
+                .then (respuestaDetalles => respuestaDetalles.json())
+                .then (respuestaDetalles => {
+                    const resultadosDetalles = respuestaDetalles;
+                    console.log(resultadosDetalles);
+                    const habilidad = resultadosDetalles[`abilities`][0][`ability`][`name`];
+                    mostrarCard(element, habilidad);
+
+                });          
         
-        })
+        });
+    });
 
 }    
 
 requestPokemons();
 
-
-
 // Renderizo una card
 
-const mostrarCard = (pokemon) => {
+const mostrarCard = (pokemon, habilidad) => {
     let contenedorCards = document.querySelector(".cardContainer");
 
     let contenedorCol = document.createElement("div");
@@ -58,22 +67,22 @@ const mostrarCard = (pokemon) => {
     
     let idPoke = document.createElement("p");
     idPoke.setAttribute("class", "card-text col-3 h5");
-    idPoke.innerText = `#${pokemon.url.slice(35, -1)}`;
+    idPoke.innerText = `#${pokemon.url.slice(34, -1)}`;
 
     /*
     let imgPoke = document.createElement("img");
     imgPoke.setAttribute(`src`, `img/pika.png`);
-    imgPoke.setAttribute(`alt`, `Pikachu sonríe a la cámara`);
+    imgPoke.setAttribute(`alt`, `Pikachu sonríe a la cámara`);*/
 
-    let categoriaPoke = document.createElement("p");
-    categoriaPoke.setAttribute("class", "card-text col-12 h6");
-    categoriaPoke.innerText = `Electricidad`;*/
+    let habilidadPoke = document.createElement("p");
+    habilidadPoke.setAttribute("class", "card-text col-12 h6");
+    habilidadPoke.innerText = `Habilidad: ${habilidad}`;
 
     let button = document.createElement("button");
     button.setAttribute("class", "btn btn-primary")
     button.innerText = "Ver más";
 
-    divRow.append(nombrePoke, idPoke/*, imgPoke, categoriaPoke*/);
+    divRow.append(nombrePoke, idPoke, /*imgPoke,*/ habilidadPoke);
     divCardBody.append(divRow);
     contenedorCard.append(divCardBody, button);
     contenedorCol.append(contenedorCard);
