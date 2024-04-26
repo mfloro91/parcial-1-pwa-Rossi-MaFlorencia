@@ -8,19 +8,30 @@ resultadosPokemones = [];
 // Hago una función que consulta con fetch datos básicos de 100 pokemones
 
 const requestPokemons = () => {
+    
+    // Voy a la URL general y me traigo nombre del pokemon
+
     fetch(urlPokemon) 
     .then (respuesta => respuesta.json())
     .then(respuesta => {
         const resultados = respuesta.results;
+
+        // Renderizo respuestas usando la función mostrarCard
+        // Me guardo URL en array 
+
         resultados.forEach(element => {
+            const url = (element["url"]);
             mostrarCard(element);
+            resultadosPokemones.push(url);
         });
-        //resultadosPokemones.push(resultados);
-        //const primerResultado = resultados [0];
-    })
-}
+        
+        })
+
+}    
 
 requestPokemons();
+
+
 
 // Renderizo una card
 
@@ -44,21 +55,27 @@ const mostrarCard = (pokemon) => {
     nombrePoke.setAttribute("class", "card-text col-9 h3");
     nombrePoke.innerText = `${pokemon.name}`
 
+    
     let idPoke = document.createElement("p");
     idPoke.setAttribute("class", "card-text col-3 h5");
-    idPoke.innerText = `#01`;
+    idPoke.innerText = `#${pokemon.url.slice(35, -1)}`;
 
+    /*
     let imgPoke = document.createElement("img");
     imgPoke.setAttribute(`src`, `img/pika.png`);
     imgPoke.setAttribute(`alt`, `Pikachu sonríe a la cámara`);
 
     let categoriaPoke = document.createElement("p");
     categoriaPoke.setAttribute("class", "card-text col-12 h6");
-    categoriaPoke.innerText = `Electricidad`;
+    categoriaPoke.innerText = `Electricidad`;*/
 
-    divRow.append(nombrePoke, idPoke, imgPoke, categoriaPoke);
+    let button = document.createElement("button");
+    button.setAttribute("class", "btn btn-primary")
+    button.innerText = "Ver más";
+
+    divRow.append(nombrePoke, idPoke/*, imgPoke, categoriaPoke*/);
     divCardBody.append(divRow);
-    contenedorCard.append(divCardBody);
+    contenedorCard.append(divCardBody, button);
     contenedorCol.append(contenedorCard);
     contenedorCards.append(contenedorCol);
 
