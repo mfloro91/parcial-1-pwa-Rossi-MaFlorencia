@@ -1,4 +1,4 @@
-* {
+*, body {
     background-color: #0f224a;
 }
 
@@ -45,11 +45,7 @@ form .btn:hover {
     
 }
 
-.cardContainer {
-    margin: 0 auto;
-
-}
-
+    
 
 
 
