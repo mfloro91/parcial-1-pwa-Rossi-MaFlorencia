@@ -9,6 +9,15 @@ h2 {
     color: #FFCB08;
 }
 
+.detalles h2 {
+    text-align: left;
+    color: #FFCB08;
+}
+
+.detalles {
+    color: white;
+}
+
 nav div a img {
     height: 5rem;
 }
