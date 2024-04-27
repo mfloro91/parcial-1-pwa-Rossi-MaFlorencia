@@ -29,9 +29,11 @@ const requestPokemons = () => {
                 .then (respuestaDetalles => respuestaDetalles.json())
                 .then (respuestaDetalles => {
                     const resultadosDetalles = respuestaDetalles;
-                    console.log(resultadosDetalles);
+                    //console.log(resultadosDetalles);
                     const habilidad = resultadosDetalles[`abilities`][0][`ability`][`name`];
-                    mostrarCard(element, habilidad);
+                    const img = resultadosDetalles[`sprites`][`front_shiny`];
+                    console.log(img);
+                    mostrarCard(element, img, habilidad);
 
                 });          
         
@@ -44,7 +46,7 @@ requestPokemons();
 
 // Renderizo una card
 
-const mostrarCard = (pokemon, habilidad) => {
+const mostrarCard = (pokemon, img, habilidad) => {
     let contenedorCards = document.querySelector(".cardContainer");
 
     let contenedorCol = document.createElement("div");
@@ -69,10 +71,11 @@ const mostrarCard = (pokemon, habilidad) => {
     idPoke.setAttribute("class", "card-text col-3 h5");
     idPoke.innerText = `#${pokemon.url.slice(34, -1)}`;
 
-    /*
+    
     let imgPoke = document.createElement("img");
-    imgPoke.setAttribute(`src`, `img/pika.png`);
-    imgPoke.setAttribute(`alt`, `Pikachu sonríe a la cámara`);*/
+    imgPoke.setAttribute(`src`, `${img}`);
+    imgPoke.setAttribute(`class`, `imgCard`);
+    imgPoke.setAttribute(`alt`, `Pikachu sonríe a la cámara`);
 
     let habilidadPoke = document.createElement("p");
     habilidadPoke.setAttribute("class", "card-text col-12 h6");
@@ -82,7 +85,7 @@ const mostrarCard = (pokemon, habilidad) => {
     button.setAttribute("class", "btn btn-primary")
     button.innerText = "Ver más";
 
-    divRow.append(nombrePoke, idPoke, /*imgPoke,*/ habilidadPoke);
+    divRow.append(nombrePoke, idPoke, imgPoke, habilidadPoke);
     divCardBody.append(divRow);
     contenedorCard.append(divCardBody, button);
     contenedorCol.append(contenedorCard);

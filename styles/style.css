@@ -11,6 +11,9 @@ nav div a img {
     height: 5rem;
 }
 
+.imgCard {
+    width: 50%;
+}
 
 
 form .btn {
