@@ -1,6 +1,7 @@
 // me guardo la url de la que quiero traer datos
 const urlPokemon = "https://pokeapi.co/api/v2/pokemon/?offset=20&limit=100";
 const urlPokemonPorId = "https://pokeapi.co/api/v2/pokemon/";
+const historialID = [];
 
 // Hago una función que consulta con fetch datos básicos de 100 pokemones
 
@@ -59,7 +60,7 @@ const mostrarCard = (pokemon, img, habilidad) => {
 
     let nombrePoke = document.createElement("h3");
     nombrePoke.setAttribute("class", "card-text col-9 h3");
-    nombrePoke.innerText = `${pokemon.name}`;
+    nombrePoke.innerText = `${pokemon.name.toUpperCase()}`;
 
 
     let idPoke = document.createElement("p");
@@ -92,7 +93,9 @@ const mostrarCard = (pokemon, img, habilidad) => {
     contenedorCards.append(contenedorCol);
 
     link.addEventListener("click", () => {
-        localStorage.clear();
+        localStorage.removeItem("id");
+        historialID.push(id);
+        localStorage.setItem("historial", JSON.stringify(historialID));
         localStorage.setItem("id", id);
         requestPokemons();
     });
