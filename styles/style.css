@@ -1,8 +1,10 @@
-*, body {
+*,
+body {
     background-color: #0f224a;
 }
 
-h1, h2 {
+h1,
+h2 {
     text-align: center;
     color: #FFCB08;
 }
@@ -37,18 +39,17 @@ form .btn:hover {
 }
 
 .card {
-    background-color:#0f224a;
+    background-color: #0f224a;
     color: white;
     border-radius: 12px;
 }
 
 .cardPoke:hover {
-    box-shadow: 5px 5px 5px rgba(0,0,0,0.4);
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.4);
     transform: translateY(-1%);
-    
+
 }
 
-    
-
-
-
+.cardContainer {
+    margin: 0 auto;
+}
