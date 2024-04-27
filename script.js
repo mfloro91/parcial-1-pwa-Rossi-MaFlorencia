@@ -2,10 +2,6 @@
 const urlPokemon = "https://pokeapi.co/api/v2/pokemon/?offset=20&limit=100";
 const urlPokemonPorId = "https://pokeapi.co/api/v2/pokemon/";
 
-
-// Hago un array para pushear primeros datos de los pokemones
-idPokemones = [];
-
 // Hago una función que consulta con fetch datos básicos de 100 pokemones
 
 const requestPokemons = () => {
@@ -21,9 +17,7 @@ const requestPokemons = () => {
             // Me guardo URL en array 
 
             resultados.forEach(element => {
-                const id = (element["url"].slice(34, -1));
-
-                //idPokemones.push(id);
+                const id = (element["url"].slice(34, -1));        
 
                 fetch(urlPokemonPorId + id)
                     .then(respuestaDetalles => respuestaDetalles.json())
@@ -32,7 +26,6 @@ const requestPokemons = () => {
                         //console.log(resultadosDetalles);
                         const habilidad = resultadosDetalles[`abilities`][0][`ability`][`name`];
                         const img = resultadosDetalles[`sprites`][`front_shiny`];
-                        console.log(img);
                         mostrarCard(element, img, habilidad);
 
                     });
@@ -44,9 +37,11 @@ const requestPokemons = () => {
 
 requestPokemons();
 
-// Renderizo una card
+// Renderizo una card resumen productos
 
 const mostrarCard = (pokemon, img, habilidad) => {
+
+    let id = pokemon.url.slice(34, -1);
     let contenedorCards = document.querySelector(".cardContainer");
 
     let contenedorCol = document.createElement("div");
@@ -64,12 +59,12 @@ const mostrarCard = (pokemon, img, habilidad) => {
 
     let nombrePoke = document.createElement("h3");
     nombrePoke.setAttribute("class", "card-text col-9 h3");
-    nombrePoke.innerText = `${pokemon.name}`
+    nombrePoke.innerText = `${pokemon.name}`;
 
 
     let idPoke = document.createElement("p");
     idPoke.setAttribute("class", "card-text col-3 h5");
-    idPoke.innerText = `#${pokemon.url.slice(34, -1)}`;
+    idPoke.innerText = `#${id}`;
 
 
     let imgPoke = document.createElement("img");
@@ -86,7 +81,7 @@ const mostrarCard = (pokemon, img, habilidad) => {
     link.setAttribute("class", "d-grid gap-2");
 
     let button = document.createElement("button");
-    button.setAttribute("class", "btn btn-primary");
+    button.setAttribute("class", `btn btn-primary btnDetalles ${id}`);
     button.innerText = "Ver más";
 
     divRow.append(nombrePoke, idPoke, imgPoke, habilidadPoke);
@@ -96,40 +91,12 @@ const mostrarCard = (pokemon, img, habilidad) => {
     contenedorCol.append(contenedorCard);
     contenedorCards.append(contenedorCol);
 
+    link.addEventListener("click", () => {
+        localStorage.clear();
+        localStorage.setItem("id", id);
+        requestPokemons();
+    });
+    
+
 }
 
-
-
-
-
-
-/*            <div class="card cardPoke me-2 mb-2" style="width: 20rem;">
-                <div class="card-body">
-                    <div class="row">
-                        <p class="card-text col-9 h3"> Pikachu </p>
-                        <p class="card-text col-3 h5">#01</p>
-                        <img src="img/pika.png" alt="">
-                        <p class="card-text col-12 h6"> Electricidad </p>
-                    </div>
-                </div>
-
-                <div class="card-body">
-                    <div class="row">
-
-                        <p class="card-text col-2">1</p>
-                        <p class="card-text col-6">Poder</p>
-                        <p class="card-text col-4"> Tirar rayos</p>
-
-                        <p class="card-text col-2">2</p>
-                        <p class="card-text col-6">Color</p>
-                        <p class="card-text col-4"> Amarillo</p>
-
-                        <p class="card-text col-2">3</p>
-                        <p class="card-text col-6">Dato</p>
-                        <p class="card-text col-4"> Se ríe</p>
-
-                    </div>
-                </div>
-
-            </div>
-            */
