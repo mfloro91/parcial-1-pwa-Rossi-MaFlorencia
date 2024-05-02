@@ -2,6 +2,8 @@
 const urlPokemon = "https://pokeapi.co/api/v2/pokemon/?offset=20&limit=100";
 const urlPokemonPorId = "https://pokeapi.co/api/v2/pokemon/";
 const listaPokemones = [];
+let historialID = JSON.parse(localStorage.getItem("historial"));
+
 
 // Hago una función que consulta con fetch datos básicos de 100 pokemones
 
@@ -17,9 +19,9 @@ const requestPokemons = () => {
             // Recorro cada elemento pokemon
 
             resultados.forEach(element => {
-                
+
                 // Me guardo el ID de cada elemento
-                const id = (element["url"].slice(34, -1));        
+                const id = (element["url"].slice(34, -1));
 
                 // Hago un fetch para cada pokemon y obtengo sus detalles
                 fetch(urlPokemonPorId + id)
@@ -27,7 +29,7 @@ const requestPokemons = () => {
                     .then(respuestaDetalles => {
                         const resultadosDetalles = respuestaDetalles;
                         //console.log(resultadosDetalles);
-                        
+
                         // Llamo a la función agregar a la lista (pushea cada pokemon al array de pokemones para guardar datos de manera local)
                         agregarLista(resultadosDetalles);
 
@@ -53,7 +55,7 @@ function agregarLista(lista) {
 // Función que renderiza una card resumida por cada pokemon
 
 
-function mostrarCard (pokemon) {
+function mostrarCard(pokemon) {
 
     let id = pokemon[`species`][`url`].slice(42, -1);
     let name = pokemon[`species`][`name`].toUpperCase();
@@ -112,8 +114,46 @@ function mostrarCard (pokemon) {
     link.addEventListener("click", () => {
         localStorage.removeItem("id");
         localStorage.setItem("id", id);
+        guardarHistorial(id);
     });
-    
 
+
+}
+
+// Función que guarda en localStorage el historial
+
+function guardarHistorial(id) {
+    let historialID = JSON.parse(localStorage.getItem("historial")) || [];
+    historialID.push(id);
+    localStorage.setItem("historial", JSON.stringify(historialID));
+}
+
+// Traigo elementos DOM para renderizar el historial - cuando se hace click se dispara la función mostrar historial
+
+let buttonHistorial = document.querySelector(".buttonHistorial");
+
+buttonHistorial.addEventListener("click", () => {
+    mostrarHistorial();
+})
+
+// Función que renderiza el historial
+
+function mostrarHistorial() {
+
+    let contenedorHistorial = document.querySelector(".bodyHistorial");
+
+    if (historialID !== null) {
+
+        let p = document.createElement("p");
+        p.innerText = historialID;
+        contenedorHistorial.append(p);
+
+    } else {
+        console.log("hola");
+        let p = document.createElement("p");
+        p.innerText = "No realizaste ninguna búsqueda aún.";
+        contenedorHistorial.append(p);
+
+    }
 }
 

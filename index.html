@@ -30,7 +30,35 @@
 
     <main class="container">
 
-        <h1>Colección de cartas Pokemon</h1>
+        <div class="intro text-center">
+            <h1>Colección de cartas Pokemon</h1>
+
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary buttonHistorial mt-5" data-bs-toggle="modal"
+                data-bs-target="#modalDetalle">
+                Ver historial
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="modalDetalle" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="modalLabel">Ver historial de búsqueda</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body bodyHistorial">
+
+                        </div>
+                        <div class="modal-footer">
+
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
 
         <!-- Container cards con DOM - fetch -->
 
