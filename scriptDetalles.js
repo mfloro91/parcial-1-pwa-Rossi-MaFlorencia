@@ -2,34 +2,21 @@
 const urlPokemon = "https://pokeapi.co/api/v2/pokemon/?offset=20&limit=100";
 const urlPokemonPorId = "https://pokeapi.co/api/v2/pokemon/";
 let id = localStorage.getItem("id");
-let historial = localStorage.getItem("historial");
-console.log(historial);
-
-
 
 
 // Hago una función que consulta con fetch detalles pokemones
 
+
 const requestDetallePokemons = () => {
 
-    // Voy a la URL general y me traigo nombre del pokemon
+    // Voy a la URL del pokemon seleccionado por ID
 
     fetch(urlPokemonPorId + id)
         .then(respuesta => respuesta.json())
         .then(respuestaDetalles => {
             const resultadosDetalles = respuestaDetalles;
-            console.log(resultadosDetalles);
-            const pokemon = resultadosDetalles[`species`][`name`];
-            const habilidad = resultadosDetalles[`abilities`][0][`ability`][`name`];
-            const img = resultadosDetalles[`sprites`][`front_shiny`];
-            const peso = resultadosDetalles[`weight`];
-            const valores = [];
-            for (let valor of resultadosDetalles[`types`]) {
-                valores.push(valor[`type`][`name`]);
-            }
-
-            mostrarDetalles(pokemon, img, habilidad, valores, peso);
-
+            //console.log(resultadosDetalles);
+            mostrarDetalles(resultadosDetalles);
 
             });
 }
@@ -39,7 +26,17 @@ requestDetallePokemons();
 
 // Renderizo página detalles
 
-const mostrarDetalles = (pokemon, img, habilidad, valores, peso) => {
+const mostrarDetalles = (pokemon) => {
+
+    let id = pokemon[`species`][`url`].slice(42, -1);
+    let name = pokemon[`species`][`name`].toUpperCase();
+    let habilidad = pokemon[`abilities`][0][`ability`][`name`];
+    let img = pokemon[`sprites`][`front_shiny`];
+    let peso = pokemon[`weight`];
+    let valores = [];
+    for (let valor of pokemon[`types`]) {
+        valores.push(valor[`type`][`name`]);
+    }
 
     let contenedorDetalles = document.querySelector(".contenedorDetalles");
 
@@ -59,7 +56,7 @@ const mostrarDetalles = (pokemon, img, habilidad, valores, peso) => {
 
     let tituloDetalle = document.createElement("h2");
     tituloDetalle.setAttribute("class", "h3");
-    tituloDetalle.innerText = `Nombre: ${pokemon.toUpperCase()}`;
+    tituloDetalle.innerText = `Nombre: ${name}`;
 
     let detalle1 = document.createElement("p");
     detalle1.setAttribute("class", "w-75 mt-5");
@@ -67,15 +64,20 @@ const mostrarDetalles = (pokemon, img, habilidad, valores, peso) => {
 
     let detalle2 = document.createElement("p");
     detalle2.setAttribute("class", "w-75");
-    detalle2.innerText = `Habilidad Principal: ${habilidad}`;
+    detalle2.innerText = `Habilidad Principal: ${habilidad}.`;
 
     let detalle3 = document.createElement("p");
     detalle3.setAttribute("class", "w-75");
-    detalle3.innerText = `Valores: ${valores[0]} y ${valores [1]}`;
+
+    if (valores.length ==2) {
+    detalle3.innerText = `Valores: ${valores[0]} y ${valores [1]}.`;
+    } else {
+        detalle3.innerText = `Valor: ${valores[0]}.`;
+    }
 
     let detalle4 = document.createElement("p");
     detalle4.setAttribute("class", "w-75");
-    detalle4.innerText = `Peso: ${peso}`;
+    detalle4.innerText = `Peso: ${peso} kg.`;
 
     divImg.append(imgDetalle);
     divTexto.append(tituloDetalle, detalle1, detalle2, detalle3, detalle4);

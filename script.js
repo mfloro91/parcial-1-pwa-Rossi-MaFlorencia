@@ -1,33 +1,38 @@
 // me guardo la url de la que quiero traer datos
 const urlPokemon = "https://pokeapi.co/api/v2/pokemon/?offset=20&limit=100";
 const urlPokemonPorId = "https://pokeapi.co/api/v2/pokemon/";
-const historialID = [];
+const listaPokemones = [];
 
 // Hago una función que consulta con fetch datos básicos de 100 pokemones
 
 const requestPokemons = () => {
 
-    // Voy a la URL general y me traigo nombre del pokemon
+    // Voy a la URL general y me traigo nombre del pokemon y url
 
     fetch(urlPokemon)
         .then(respuesta => respuesta.json())
         .then(respuesta => {
             const resultados = respuesta.results;
 
-            // Renderizo respuestas usando la función mostrarCard
-            // Me guardo URL en array 
+            // Recorro cada elemento pokemon
 
             resultados.forEach(element => {
+                
+                // Me guardo el ID de cada elemento
                 const id = (element["url"].slice(34, -1));        
 
+                // Hago un fetch para cada pokemon y obtengo sus detalles
                 fetch(urlPokemonPorId + id)
                     .then(respuestaDetalles => respuestaDetalles.json())
                     .then(respuestaDetalles => {
                         const resultadosDetalles = respuestaDetalles;
                         //console.log(resultadosDetalles);
-                        const habilidad = resultadosDetalles[`abilities`][0][`ability`][`name`];
-                        const img = resultadosDetalles[`sprites`][`front_shiny`];
-                        mostrarCard(element, img, habilidad);
+                        
+                        // Llamo a la función agregar a la lista (pushea cada pokemon al array de pokemones para guardar datos de manera local)
+                        agregarLista(resultadosDetalles);
+
+                        // Llamo a la función mostrar card, que renderiza un resumen de cada pokemon
+                        mostrarCard(resultadosDetalles);
 
                     });
 
@@ -38,11 +43,23 @@ const requestPokemons = () => {
 
 requestPokemons();
 
-// Renderizo una card resumen productos
+// Función que agrega cada pokemon a un array
 
-const mostrarCard = (pokemon, img, habilidad) => {
+function agregarLista(lista) {
+    listaPokemones.push(lista);
+}
 
-    let id = pokemon.url.slice(34, -1);
+
+// Función que renderiza una card resumida por cada pokemon
+
+
+function mostrarCard (pokemon) {
+
+    let id = pokemon[`species`][`url`].slice(42, -1);
+    let name = pokemon[`species`][`name`].toUpperCase();
+    let habilidad = pokemon[`abilities`][0][`ability`][`name`];
+    let img = pokemon[`sprites`][`front_shiny`];
+
     let contenedorCards = document.querySelector(".cardContainer");
 
     let contenedorCol = document.createElement("div");
@@ -60,7 +77,7 @@ const mostrarCard = (pokemon, img, habilidad) => {
 
     let nombrePoke = document.createElement("h3");
     nombrePoke.setAttribute("class", "card-text col-9 h3");
-    nombrePoke.innerText = `${pokemon.name.toUpperCase()}`;
+    nombrePoke.innerText = `${name}`;
 
 
     let idPoke = document.createElement("p");
@@ -94,10 +111,7 @@ const mostrarCard = (pokemon, img, habilidad) => {
 
     link.addEventListener("click", () => {
         localStorage.removeItem("id");
-        historialID.push(id);
-        localStorage.setItem("historial", JSON.stringify(historialID));
         localStorage.setItem("id", id);
-        requestPokemons();
     });
     
 
