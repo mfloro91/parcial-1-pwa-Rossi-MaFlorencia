@@ -21,6 +21,10 @@ nav div a img {
     height: 5rem;
 }
 
+a {
+    text-decoration: none;
+}
+
 .imgCard {
     width: 50%;
 }
@@ -57,7 +61,8 @@ form .btn:hover {
 
 }
 
-.cardContainer, .contenedorDetalles {
+.cardContainer,
+.contenedorDetalles {
     margin: 0 auto;
 }
 
@@ -71,7 +76,7 @@ form .btn:hover {
 }
 
 .modal-title {
-    color:#0F224A;
+    color: #0F224A;
 }
 
 .busquedaVacia {
@@ -79,7 +84,7 @@ form .btn:hover {
 }
 
 li {
-    list-style-position : inside;
+    list-style-position: inside;
     padding-left: 2rem;
 }
 

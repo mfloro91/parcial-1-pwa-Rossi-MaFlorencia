@@ -15,11 +15,17 @@
     <header>
         <nav class="navbar">
             <div class="container-fluid">
-                <a class="navbar-brand" href="index.html">
-                    <img src="img/logo.png" alt="Logo de Pokemon">
-                </a>
-                <form class="d-flex" role="search" method="get">
-                    <input class="form-control me-2 inputUsuario" type="search" placeholder="Buscar" aria-label="Search">
+                <div class="m-3">
+                    <a class="navbar-brand" href="index.html">
+                        <img src="img/logo.png" alt="Logo de Pokemon">
+                    </a>
+                    <a href="index.html">
+                        Inicio
+                    </a>
+                </div>
+                <form class="d-flex m-3" role="search" method="get">
+                    <input class="form-control me-2 inputUsuario" type="search" placeholder="Buscar"
+                        aria-label="Search">
                     <button class="btn" type="submit">Buscar</button>
                 </form>
             </div>
@@ -45,7 +51,8 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h2 class="modal-title fs-5" id="modalLabel">Ver historial de búsqueda</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
                         </div>
                         <h3 class="fs-6 bold">Estos fueron los Pokemon que buscaste en orden:</h3>
                         <ol class="modal-body bodyHistorial">

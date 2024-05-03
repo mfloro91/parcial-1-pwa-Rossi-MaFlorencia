@@ -18,7 +18,7 @@ const requestDetallePokemons = () => {
             //console.log(resultadosDetalles);
             mostrarDetalles(resultadosDetalles);
 
-            });
+        });
 }
 
 requestDetallePokemons();
@@ -69,8 +69,8 @@ const mostrarDetalles = (pokemon) => {
     let detalle3 = document.createElement("p");
     detalle3.setAttribute("class", "w-75");
 
-    if (valores.length ==2) {
-    detalle3.innerText = `Valores: ${valores[0]} y ${valores [1]}.`;
+    if (valores.length == 2) {
+        detalle3.innerText = `Valores: ${valores[0]} y ${valores[1]}.`;
     } else {
         detalle3.innerText = `Valor: ${valores[0]}.`;
     }

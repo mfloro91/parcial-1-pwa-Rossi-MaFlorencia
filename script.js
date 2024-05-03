@@ -61,7 +61,7 @@ function mostrarCard(pokemon) {
     let id = pokemon[`species`][`url`].slice(42, -1);
     let name = pokemon[`species`][`name`].toUpperCase();
     let habilidad = pokemon[`abilities`][0][`ability`][`name`];
-    let img = pokemon[`sprites`][`front_shiny`];    
+    let img = pokemon[`sprites`][`front_shiny`];
 
     let contenedorCol = document.createElement("div");
     contenedorCol.setAttribute("class", "col-12 col-md-6 col-lg-4 col-xl-3 p-1");
@@ -146,18 +146,18 @@ buttonHistorial.addEventListener("click", () => {
 
 function mostrarHistorial() {
 
-    
+
 
     if (historial !== null) {
 
         for (let pokemon of historial) {
-        let li = document.createElement("li");
-        li.innerText = pokemon;
-        contenedorHistorial.append(li);
+            let li = document.createElement("li");
+            li.innerText = pokemon;
+            contenedorHistorial.append(li);
         }
 
     } else {
-        
+
         console.log("hola");
         let li = document.createElement("li");
         li.setAttribute("class", "busquedaVacia");
@@ -178,7 +178,7 @@ function mostrarHistorial() {
 
 let boton = document.querySelector(".btn");
 boton.addEventListener(`click`, () => {
-    
+
     let input = document.querySelector(".inputUsuario");
     valor = input.value;
     //peliBuscada = [];
@@ -189,23 +189,23 @@ boton.addEventListener(`click`, () => {
 
     const requestPokemonBusqueda = () => {
         fetch(`https://pokeapi.co/api/v2/pokemon/` + valor)
-        .then(respuesta => respuesta.json())
-        .then(respuesta => {
-            contenedorCards.innerText =  "";
-            mostrarCard(respuesta);
-        })
+            .then(respuesta => respuesta.json())
+            .then(respuesta => {
+                contenedorCards.innerText = "";
+                mostrarCard(respuesta);
+            })
     }
-    
-    
+
+
     requestPokemonBusqueda();
-    
+
 
 })
 
 // Agrego evento submit para que no recargue la página
 
 document.querySelector("form").addEventListener("submit", (e) => {
-    
+
     // Evito que se refresque la pagina
     e.preventDefault();
 
