@@ -3,6 +3,7 @@ const urlPokemon = "https://pokeapi.co/api/v2/pokemon/?offset=20&limit=100";
 const urlPokemonPorId = "https://pokeapi.co/api/v2/pokemon/";
 const listaPokemones = [];
 let historial = JSON.parse(localStorage.getItem("historial"));
+let contenedorCards = document.querySelector(".cardContainer");
 
 
 // Hago una función que consulta con fetch datos básicos de 100 pokemones
@@ -60,9 +61,7 @@ function mostrarCard(pokemon) {
     let id = pokemon[`species`][`url`].slice(42, -1);
     let name = pokemon[`species`][`name`].toUpperCase();
     let habilidad = pokemon[`abilities`][0][`ability`][`name`];
-    let img = pokemon[`sprites`][`front_shiny`];
-
-    let contenedorCards = document.querySelector(".cardContainer");
+    let img = pokemon[`sprites`][`front_shiny`];    
 
     let contenedorCol = document.createElement("div");
     contenedorCol.setAttribute("class", "col-12 col-md-6 col-lg-4 col-xl-3 p-1");
@@ -120,6 +119,11 @@ function mostrarCard(pokemon) {
 
 }
 
+
+/*********************************/
+
+
+
 // Función que guarda en localStorage el historial
 
 function guardarHistorial(name) {
@@ -162,4 +166,48 @@ function mostrarHistorial() {
 
     }
 }
+
+
+
+/*********************************/
+
+
+// Función buscador
+
+// Traigo el boton de envio
+
+let boton = document.querySelector(".btn");
+boton.addEventListener(`click`, () => {
+    
+    let input = document.querySelector(".inputUsuario");
+    valor = input.value;
+    //peliBuscada = [];
+    //peliBuscada.push(valor);
+    console.log(valor);
+
+    input.value = "";
+
+    const requestPokemonBusqueda = () => {
+        fetch(`https://pokeapi.co/api/v2/pokemon/` + valor)
+        .then(respuesta => respuesta.json())
+        .then(respuesta => {
+            contenedorCards.innerText =  "";
+            mostrarCard(respuesta);
+        })
+    }
+    
+    
+    requestPokemonBusqueda();
+    
+
+})
+
+// Agrego evento submit para que no recargue la página
+
+document.querySelector("form").addEventListener("submit", (e) => {
+    
+    // Evito que se refresque la pagina
+    e.preventDefault();
+
+})
 
