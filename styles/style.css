@@ -77,3 +77,22 @@ form .btn:hover {
 .modal-title {
     color:#0F224A;
 }
+
+.busquedaVacia {
+    list-style: none;
+}
+
+li {
+    list-style-position : inside;
+    padding-left: 2rem;
+}
+
+.modal-content {
+    text-align: start;
+}
+
+.modal-content h3 {
+    padding-top: 2rem;
+    padding-left: 2rem;
+
+}

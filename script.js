@@ -2,7 +2,7 @@
 const urlPokemon = "https://pokeapi.co/api/v2/pokemon/?offset=20&limit=100";
 const urlPokemonPorId = "https://pokeapi.co/api/v2/pokemon/";
 const listaPokemones = [];
-let historialID = JSON.parse(localStorage.getItem("historial"));
+let historial = JSON.parse(localStorage.getItem("historial"));
 
 
 // Hago una función que consulta con fetch datos básicos de 100 pokemones
@@ -114,7 +114,7 @@ function mostrarCard(pokemon) {
     link.addEventListener("click", () => {
         localStorage.removeItem("id");
         localStorage.setItem("id", id);
-        guardarHistorial(id);
+        guardarHistorial(name);
     });
 
 
@@ -122,17 +122,19 @@ function mostrarCard(pokemon) {
 
 // Función que guarda en localStorage el historial
 
-function guardarHistorial(id) {
-    let historialID = JSON.parse(localStorage.getItem("historial")) || [];
-    historialID.push(id);
-    localStorage.setItem("historial", JSON.stringify(historialID));
+function guardarHistorial(name) {
+    let historial = JSON.parse(localStorage.getItem("historial")) || [];
+    historial.push(name);
+    localStorage.setItem("historial", JSON.stringify(historial));
 }
 
 // Traigo elementos DOM para renderizar el historial - cuando se hace click se dispara la función mostrar historial
 
 let buttonHistorial = document.querySelector(".buttonHistorial");
+let contenedorHistorial = document.querySelector(".bodyHistorial");
 
 buttonHistorial.addEventListener("click", () => {
+    contenedorHistorial.innerText = "";
     mostrarHistorial();
 })
 
@@ -140,19 +142,23 @@ buttonHistorial.addEventListener("click", () => {
 
 function mostrarHistorial() {
 
-    let contenedorHistorial = document.querySelector(".bodyHistorial");
+    
 
-    if (historialID !== null) {
+    if (historial !== null) {
 
-        let p = document.createElement("p");
-        p.innerText = historialID;
-        contenedorHistorial.append(p);
+        for (let pokemon of historial) {
+        let li = document.createElement("li");
+        li.innerText = pokemon;
+        contenedorHistorial.append(li);
+        }
 
     } else {
+        
         console.log("hola");
-        let p = document.createElement("p");
-        p.innerText = "No realizaste ninguna búsqueda aún.";
-        contenedorHistorial.append(p);
+        let li = document.createElement("li");
+        li.setAttribute("class", "busquedaVacia");
+        li.innerText = "No realizaste ninguna búsqueda aún.";
+        contenedorHistorial.append(li);
 
     }
 }
